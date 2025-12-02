@@ -5,10 +5,6 @@
   <version>3.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <properties>
-  <sonar.organization>corbe444</sonar.organization>
-  </properties>
-
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
@@ -175,6 +171,7 @@
 
   <properties>
     <junit-version>4.11</junit-version>
+    <sonar.organization>corbe444</sonar.organization>
   </properties>
 
   <dependencyManagement>
