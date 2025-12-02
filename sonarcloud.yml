@@ -1,0 +1,37 @@
+name: SonarCloud
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Install Ant
+        run: sudo apt-get install ant -y
+
+      - name: Compile with Ant
+        run: ant -f build.xml || true
+        # "|| true" evita fallimenti anche se alcuni target non esistono
+
+      - name: Install SonarScanner CLI
+        uses: SonarSource/sonarcloud-github-c-cpp@v2
+
+      - name: Run SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-scanner
